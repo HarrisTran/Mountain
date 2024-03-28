@@ -1,0 +1,10 @@
+{
+  "name": "Mountain",
+  "uuid": "bcb6ed53-c51a-4dba-a208-5bd88838245c",
+  "creator": {
+    "version": "3.8.2"
+  },
+  "dependencies": {
+    "crypto-es": "^2.1.0"
+  }
+}
