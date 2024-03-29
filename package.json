@@ -5,6 +5,7 @@
     "version": "3.8.2"
   },
   "dependencies": {
-    "crypto-es": "^2.1.0"
+    "crypto-es": "^2.1.0",
+    "typescript": "^5.4.3"
   }
 }
