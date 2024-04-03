@@ -12,7 +12,7 @@ export default class Index extends Component {
         resources.preloadDir("/", (current: number, total: number)=>{
 
         }, async ()=>{
-            await ResourceManager.instance.loadRes("Prefab")
+            await ResourceManager.instance.loadResource();
         })
     }
 }

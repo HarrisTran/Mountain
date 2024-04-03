@@ -10,13 +10,10 @@ export default class ResourceManager {
     private static _instance: any = null
 
     private static readonly FRAGMENT_JSON_PATH : string = "Jsons/Blocks";
+    private static readonly FRAGMENT_PREFAB_PATH : string = "Prefab";
 
 
     private _fragmentsData : Map<string,IFragment>;
-
-
-    private _jsonFragmentDataProgress : number = 0;
-    private _jsonFragmentDataDone : boolean = false;
 
 
     static getInstance<T>(): T {
@@ -31,49 +28,47 @@ export default class ResourceManager {
         return this.getInstance<ResourceManager>()
     }
 
-    public initialize(){
 
-
-    }
-
-    public
-
-    private startLoadJsons(){
-
-    }
-
-    public async loadRes(type: string){
-        return new Promise<void>((resolve, reject)=>{
-            let resourceType = null
-            switch(type){
-                case ENUM_RESOURCE_TYPE.PREFAB:
-                    resourceType = Prefab
-                    break;
-                case ENUM_RESOURCE_TYPE.JSON:
-                    resourceType = JsonAsset
-                    break;
-            }
-            resources.loadDir(type, resourceType, (err, assets)=>{
+    public async loadResource(){
+        //load prefab
+        const loadPrefab = new Promise<void>((resolve,reject)=>{
+            resources.loadDir(ResourceManager.FRAGMENT_PREFAB_PATH, Prefab, (err, assets)=>{
                 if(err) reject && reject()
                 let asset: any
-                
-                if(type == ENUM_RESOURCE_TYPE.PREFAB){
-                    for (let i = 0; i < assets.length; i++) {
-                        asset = assets[i];
-                        PoolManager.instance.setPrefab(asset.data.name, asset)
-                    }
+                for (let i = 0; i < assets.length; i++) {
+                    asset = assets[i];
+                    PoolManager.instance.setPrefab(asset.data.name, asset)
                 }
-                if(type == ENUM_RESOURCE_TYPE.JSON){
-                    for (let i = 0; i < assets.length; i++) {
-                        asset = assets[i];
-                        console.log(asset);
-                        
-                    }
-                }
-                
                 resolve && resolve()
             })
-            
         })
+
+        //load json fragments
+        const loadJsonFragment = new Promise<void>((resolve,reject)=>{
+            resources.loadDir(ResourceManager.FRAGMENT_JSON_PATH, JsonAsset,
+                (err, assets) => {
+                    if(err) reject && reject()
+                    else {
+                        this._fragmentsData = new Map<string, IFragment>();
+                        for (let asset of assets) {
+                            let data = asset.json;
+                            this._fragmentsData.set(data.id, {
+                                id: data.id,
+                                line1: data.line1,
+                                line2: data.line2,
+                                line3: data.line3
+                            })
+                        }
+                    }
+                    resolve && resolve()
+                }
+            );
+        })
+        Promise.all([loadPrefab,loadJsonFragment])
+    }
+
+    public getFragmentData()
+    {
+        return this._fragmentsData;
     }
 }

@@ -1,79 +1,83 @@
 import { _decorator, Component, Node } from 'cc';
 import EventManager from './EventManager';
-import { ENUM_GAME_EVENT } from '../Enum';
+import { ENUM_GAME_EVENT, MAIN_GAMESTATE } from '../Enum';
 import { Prefab } from 'cc';
 import PoolManager from './PoolManager';
 import { Vec3 } from 'cc';
 import { Fragment } from '../Fragment';
 import { instantiate } from 'cc';
+import ResourceManager from './ResourceManager';
+import { UITransform } from 'cc';
+import { Enum } from 'cc';
+import { PlayerDataManager } from './PlayerDataManager';
+import { PhysicsSystem2D } from 'cc';
+import { EPhysics2DDrawFlags } from 'cc';
 const { ccclass, property } = _decorator;
 
-const test = {
-	"id": "F1",
-	"line1": [
-		"",
-		"T2",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"B1",
-		""
-	],
-	"line2": [
-		"",
-		"",
-		"B1",
-		"",
-		"",
-		"",
-		"",
-		"",
-		""
-	],
-	"line3": [
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"B1",
-		"",
-		""
-	]
-}
 @ccclass('GameManager')
 export class GameManager extends Component {
-
+	private static _instance: GameManager;
+	public static get instance(): GameManager
+	{
+		return this._instance;
+	}
+	
+	@property({ type: Enum(MAIN_GAMESTATE) }) public defaultState: MAIN_GAMESTATE = MAIN_GAMESTATE.INIT;
     @property(Node) fragmentContainer: Node = null;
     @property(Prefab) fragment: Prefab = null;
 
+	private _playerDataManager: PlayerDataManager;
+	private _state: MAIN_GAMESTATE;
+
+	public get playerDataManager(): PlayerDataManager
+	{
+		return this._playerDataManager;
+	}
+
+	public get state(){
+		return this._state;
+	}
     
     protected onLoad(): void {
+		PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.Shape;
+		GameManager._instance = this;
         EventManager.instance.on(ENUM_GAME_EVENT.GAME_START,this.onGameStart,this);
-        this.onGameStart();
     }
 
-    onGameStart(){
-        this.initGame();
+	protected start(): void {
+		this.setState(MAIN_GAMESTATE.INIT)
+	}
+
+	public setState(newState: MAIN_GAMESTATE){
+		this._state = newState;
+		if(newState === MAIN_GAMESTATE.INIT)
+		{
+			this._playerDataManager = new PlayerDataManager();
+		}
+		else if (newState === MAIN_GAMESTATE.START)
+		{
+			this.fragmentContainer.removeAllChildren();
+			let dataSet = ResourceManager.instance.getFragmentData()
+			Array.from(dataSet.keys()).forEach((key, index) => {
+				let fragmentNode = instantiate(this.fragment);
+				fragmentNode.parent = this.fragmentContainer;
+				let fragmentCmp = fragmentNode.getComponent(Fragment);
+				fragmentCmp.init({
+					id: index,
+					line1: dataSet.get(key).line1,
+					line2: dataSet.get(key).line2,
+					line3: dataSet.get(key).line3
+				})
+				fragmentCmp.rendor();
+				fragmentNode.setPosition(new Vec3(0, fragmentNode.getComponent(UITransform).height * index));
+			})
+		}
+	}
+
+    private onGameStart(){
+        this.setState(MAIN_GAMESTATE.START);
     }
 
-    initGame(){
-        this.fragmentContainer.removeAllChildren();
-        let fragment = instantiate(this.fragment);
-        fragment.setParent(this.fragmentContainer);
-        fragment.setPosition(0,0);
-        let fragmentCmp = fragment.getComponent(Fragment);
-        fragmentCmp.init({
-            id: 1,
-            line1: test.line1,
-            line2: test.line2,
-            line3: test.line3
-        })
-        fragmentCmp.rendor();
-    }
 }
 
 
