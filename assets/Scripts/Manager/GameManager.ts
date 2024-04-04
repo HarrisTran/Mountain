@@ -10,8 +10,7 @@ import ResourceManager from './ResourceManager';
 import { UITransform } from 'cc';
 import { Enum } from 'cc';
 import { PlayerDataManager } from './PlayerDataManager';
-import { PhysicsSystem2D } from 'cc';
-import { EPhysics2DDrawFlags } from 'cc';
+import { LayerManager } from './LayerManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -23,6 +22,7 @@ export class GameManager extends Component {
 	}
 	
 	@property({ type: Enum(MAIN_GAMESTATE) }) public defaultState: MAIN_GAMESTATE = MAIN_GAMESTATE.INIT;
+	@property(LayerManager) uiManager: LayerManager = null;
     @property(Node) fragmentContainer: Node = null;
     @property(Prefab) fragment: Prefab = null;
 
@@ -39,7 +39,7 @@ export class GameManager extends Component {
 	}
     
     protected onLoad(): void {
-		PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.Shape;
+		
 		GameManager._instance = this;
         EventManager.instance.on(ENUM_GAME_EVENT.GAME_START,this.onGameStart,this);
     }

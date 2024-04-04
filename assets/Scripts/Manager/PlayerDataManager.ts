@@ -1,15 +1,16 @@
+export class BoosterBase {
+    public duration : number;
+    public isActive : boolean;
+    constructor(){
+        this.isActive = false;
+    }
+}
 export class PlayerData {
     public score : number;
-    public hasX2Booster : boolean;
-    public hasHelmetBooster : boolean;
-    public hasMagnetBooster : boolean;
-    public hasSpeedBooster: boolean;
+    public activeBooster: BoosterBase[];
     constructor(){
         this.score = 0;
-        this.hasX2Booster = false;
-        this.hasHelmetBooster = false;
-        this.hasMagnetBooster = false;
-        this.hasSpeedBooster = false;
+        this.activeBooster = [];
     }
 }
 export class PlayerDataManager{
@@ -23,37 +24,25 @@ export class PlayerDataManager{
         this._playerData.score += score;
     }
 
-    triggedX2Booster() : boolean {
-        return this._playerData.hasX2Booster;
+    public getScore(){
+        return this._playerData.score;
     }
 
-    activeX2Booster(active : boolean){
-        this._playerData.hasX2Booster = active
+    public addBooster(booster: BoosterBase){
+        this._playerData.activeBooster.push(booster);
     }
 
-    triggedHelmetBooster() : boolean {
-        return this._playerData.hasHelmetBooster;
+    public removeBooster(booster: BoosterBase){
+        const index = this._playerData.activeBooster.indexOf(booster);
+        if(index !== -1){
+            this._playerData.activeBooster.splice(index,1);
+        }
     }
 
-    activeHelmetBooster(active : boolean){
-        this._playerData.hasHelmetBooster = active
+    public getActiveBoosters() {
+        return this._playerData.activeBooster;
     }
 
-    triggedMagnetBooster() : boolean {
-        return this._playerData.hasMagnetBooster;
-    }
-
-    activeMagnetBooster(active : boolean){
-        this._playerData.hasMagnetBooster = active
-    }
-
-    triggedSpeedBooster() : boolean {
-        return this._playerData.hasSpeedBooster;
-    }
-
-    activeSpeedBooster(active : boolean){
-        this._playerData.hasSpeedBooster = active
-    }
 }
 
 

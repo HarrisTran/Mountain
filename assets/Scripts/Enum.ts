@@ -1,7 +1,7 @@
 export enum MAIN_GAMESTATE {
     INIT,
     START,
-
+    GAME_OVER,
 }
 
 export enum ENUM_GAME_STATUS {
@@ -37,9 +37,12 @@ export enum ENUM_RESOURCE_TYPE {
 
 
 export enum ENUM_UI_TYPE {
-    
+    GAME_LAYER,
+    MENU_LAYER
 }
 
 export enum ENUM_AUDIO_CLIP {
     
 }
+
+export const Speed = 10000;
