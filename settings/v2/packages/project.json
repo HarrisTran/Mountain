@@ -3,7 +3,9 @@
   "general": {
     "designResolution": {
       "width": 1080,
-      "height": 1920
+      "height": 2340,
+      "fitHeight": true,
+      "fitWidth": true
     }
   },
   "layer": [
@@ -11,5 +13,28 @@
       "name": "Canvas_19",
       "value": 524288
     }
-  ]
+  ],
+  "physics": {
+    "collisionGroups": [],
+    "collisionMatrix": {
+      "0": 3,
+      "1": 1
+    }
+  },
+  "custom_joint_texture_layouts": [],
+  "sorting-layer": {
+    "layers": [
+      {
+        "id": 0,
+        "name": "default",
+        "value": 0
+      },
+      {
+        "id": 1,
+        "name": "Sorting Layer 1",
+        "value": 1
+      }
+    ],
+    "increaseId": 1
+  }
 }

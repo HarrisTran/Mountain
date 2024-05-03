@@ -1,82 +1,127 @@
-import { _decorator, Component, Node } from 'cc';
-import EventManager from './EventManager';
-import { ENUM_GAME_EVENT, MAIN_GAMESTATE } from '../Enum';
-import { Prefab } from 'cc';
-import PoolManager from './PoolManager';
-import { Vec3 } from 'cc';
+import { _decorator, Component, Enum, game, Node, Prefab, Vec3 } from 'cc';
+import { ENUM_GAME_EVENT, GamePopupCode, MAIN_GAMESTATE } from '../Enum';
 import { Fragment } from '../Fragment';
-import { instantiate } from 'cc';
-import ResourceManager from './ResourceManager';
-import { UITransform } from 'cc';
-import { Enum } from 'cc';
-import { PlayerDataManager } from './PlayerDataManager';
 import { LayerManager } from './LayerManager';
+import { PlayerDataManager } from './PlayerDataManager';
+import ResourceManager from './ResourceManager';
+import PoolManager from './PoolManager';
+import { IManager } from './IManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
 	private static _instance: GameManager;
-	public static get instance(): GameManager
-	{
+	public static get instance(): GameManager {
 		return this._instance;
 	}
-	
-	@property({ type: Enum(MAIN_GAMESTATE) }) public defaultState: MAIN_GAMESTATE = MAIN_GAMESTATE.INIT;
+	@property({ type: Enum(MAIN_GAMESTATE) }) public defaultState: MAIN_GAMESTATE = MAIN_GAMESTATE.MENU;
 	@property(LayerManager) uiManager: LayerManager = null;
-    @property(Node) fragmentContainer: Node = null;
-    @property(Prefab) fragment: Prefab = null;
+	@property(Node) fragmentContainer: Node = null;
+	@property(Node) player: Node = null;
+	@property(Prefab) fragment: Prefab = null;
 
-	private _playerDataManager: PlayerDataManager;
 	private _state: MAIN_GAMESTATE;
 
-	public get playerDataManager(): PlayerDataManager
-	{
-		return this._playerDataManager;
-	}
+	// all managers
+	private _allManagers: IManager[] = [];
+	public resouceManager: ResourceManager;
+	public playerDataManager: PlayerDataManager;
+	
 
-	public get state(){
+	public get state() {
 		return this._state;
 	}
-    
-    protected onLoad(): void {
-		
+
+	protected onLoad(): void {
 		GameManager._instance = this;
-        EventManager.instance.on(ENUM_GAME_EVENT.GAME_START,this.onGameStart,this);
-    }
-
-	protected start(): void {
-		this.setState(MAIN_GAMESTATE.INIT)
+		this._initializeGameEvent();
+		this.setState(MAIN_GAMESTATE.LOADING);
 	}
 
-	public setState(newState: MAIN_GAMESTATE){
+	private _initializeGameEvent() {
+		game.on(ENUM_GAME_EVENT.GAME_START, this.onGameStart, this);
+		game.on(ENUM_GAME_EVENT.GAME_OVER, this.onGameOver, this);
+		game.on(ENUM_GAME_EVENT.MAGIC_POCKET_EFFECT, this.onMagicPocketEffect, this);
+	}
+
+	private _initializeAllManagers(): void {
+		this._allManagers = [];
+
+		this.resouceManager = new ResourceManager();
+		this.playerDataManager = new PlayerDataManager();
+
+		this._allManagers.push(this.resouceManager);
+
+		for (let managers of this._allManagers) {
+			managers.initialize();
+		}
+	}
+
+
+	public setState(newState: MAIN_GAMESTATE) {
+		if (this._state == newState) return;
 		this._state = newState;
-		if(newState === MAIN_GAMESTATE.INIT)
-		{
-			this._playerDataManager = new PlayerDataManager();
+
+		this.uiManager.changeState(newState);
+		switch (this._state) {
+			case MAIN_GAMESTATE.LOADING:
+				this._initializeAllManagers();
+				break;
+			case MAIN_GAMESTATE.MENU:
+
+				break;
+			case MAIN_GAMESTATE.START:
+				this.fragmentContainer.removeAllChildren();
+				let dataSet = ResourceManager.instance.getFragmentData()
+				let fragmentList = ResourceManager.instance.getLevelData()[0];
+				let y = 1;
+				for (let i of fragmentList) {
+					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 1500 * y))
+					let fragmentCmp = fragmentNode.getComponent(Fragment);
+					fragmentCmp.init({
+						id: y,
+						line1: dataSet.get(i).line1,
+						line2: dataSet.get(i).line2,
+						line3: dataSet.get(i).line3,
+					})
+					fragmentCmp.rendor();
+					y++;
+				}
+				break;
+			case MAIN_GAMESTATE.GAME_OVER:
+
+				break;
+			default:
+				break;
 		}
-		else if (newState === MAIN_GAMESTATE.START)
-		{
-			this.fragmentContainer.removeAllChildren();
-			let dataSet = ResourceManager.instance.getFragmentData()
-			Array.from(dataSet.keys()).forEach((key, index) => {
-				let fragmentNode = instantiate(this.fragment);
-				fragmentNode.parent = this.fragmentContainer;
-				let fragmentCmp = fragmentNode.getComponent(Fragment);
-				fragmentCmp.init({
-					id: index,
-					line1: dataSet.get(key).line1,
-					line2: dataSet.get(key).line2,
-					line3: dataSet.get(key).line3
-				})
-				fragmentCmp.rendor();
-				fragmentNode.setPosition(new Vec3(0, fragmentNode.getComponent(UITransform).height * index));
-			})
+
+	}
+
+	private onGameStart() {
+		this.setState(MAIN_GAMESTATE.START);
+	}
+
+	private onGameOver() {
+		this.setState(MAIN_GAMESTATE.GAME_OVER);
+	}
+
+	protected update(dt: number): void {
+		if (this.state == MAIN_GAMESTATE.LOADING) {
+			let total = this._allManagers.reduce((acc,manager)=>{
+				return acc + manager.progress();
+			},0)
+			this.uiManager.loadingPanel.setLoadingProgress(total/this._allManagers.length);
+			if(this._allManagers.every(manager => manager.initializationCompleted()) && this._state == MAIN_GAMESTATE.LOADING) this.setState(MAIN_GAMESTATE.MENU);
 		}
 	}
 
-    private onGameStart(){
-        this.setState(MAIN_GAMESTATE.START);
-    }
+	private onMagicPocketEffect() {
+		let currentFragmentIndex = this.playerDataManager.currentFragmentIndex;
+		let fragment = this.fragmentContainer.children[currentFragmentIndex];
+		if (fragment) {
+			fragment.getComponent(Fragment).magicPocketEffect();
+		}
+	}
 
 }
 

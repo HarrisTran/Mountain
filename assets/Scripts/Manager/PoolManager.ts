@@ -1,10 +1,6 @@
 // Created by carolsail
 
-import { Node } from "cc"
-import { Vec3 } from "cc"
-import { Prefab } from "cc"
-import { instantiate } from "cc"
-import { NodePool } from "cc"
+import { instantiate, Node, NodePool, Prefab, Vec3 } from "cc"
 
 export default class PoolManager{
 
@@ -91,6 +87,49 @@ export default class PoolManager{
             if (pos) node.position = pos;
         }
         return node;
+    }
+
+    public async getNodeAsync(prefab: Prefab | string, parent?: Node, pos?: Vec3){
+        return new Promise<Node>((resolve, reject) => {
+            let tempPre: any;
+            let name: any;
+            if (typeof prefab === 'string') {
+                tempPre = this._dictPrefab[prefab];
+                name = prefab;
+                if (!tempPre) {
+                    console.log("Pool invalid prefab name = ", name);
+                    return null;
+                }
+            }
+            else {
+                tempPre = prefab;
+                name = prefab.data.name;
+            }
+    
+            let node = null;
+            if (this._dictPool.hasOwnProperty(name)) {
+                //已有对应的对象池
+                let pool = this._dictPool[name];
+                if (pool.size() > 0) {
+                    node = pool.get();
+                } else {
+                    node = instantiate(tempPre);
+                }
+            } else {
+                //没有对应对象池，创建他！
+                let pool = new NodePool();
+                this._dictPool[name] = pool;
+    
+                node = instantiate(tempPre);
+            }
+    
+            if (parent) {
+                node.parent = parent;
+                if (pos) node.position = pos;
+            }
+            resolve(node);
+        })
+        
     }
 
     // 节点放进池子

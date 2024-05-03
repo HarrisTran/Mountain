@@ -1,10 +1,5 @@
-import { resources } from "cc";
-import { Component } from "cc";
-import { _decorator } from "cc";
+import { _decorator, Component, PhysicsSystem2D, resources } from "cc";
 import ResourceManager from "./Manager/ResourceManager";
-import { Collider } from "cc";
-import { PhysicsSystem2D } from "cc";
-import { EPhysics2DDrawFlags } from "cc";
 
 const {ccclass, property} = _decorator;
 
