@@ -56,9 +56,9 @@ export class Fragment extends Component {
     }
 
     public async magicPocketEffect() {
-        
         let list1Pos : Vec3[] = [];
         let list1Node : Node[] = [];
+        
         this.ladder1.children.forEach(node=>{
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list1Pos.push(node.getPosition());
@@ -68,6 +68,7 @@ export class Fragment extends Component {
 
         let list2Pos : Vec3[] = [];
         let list2Node : Node[] = [];
+
         this.ladder2.children.forEach(node=>{
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list2Pos.push(node.getPosition());
@@ -77,12 +78,14 @@ export class Fragment extends Component {
 
         let list3Pos : Vec3[] = [];
         let list3Node : Node[] = [];
+
         this.ladder3.children.forEach(node=>{
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list3Pos.push(node.getPosition());
                 list3Node.push(node)
             }
         })
+        
 
         list1Pos.forEach(v => {
             let node = PoolManager.instance.getPrefab("B1");

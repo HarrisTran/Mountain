@@ -2,12 +2,14 @@ import { _decorator, animation, Component, EventKeyboard, game, input, Input, Ke
 import { ENUM_GAME_EVENT, ENUM_PLAYER_STATUS, MAIN_GAMESTATE, Speed } from '../Enum';
 import { GameManager } from '../Manager/GameManager';
 import { Player } from "./Player";
+import { MOVE_STATE, test } from "./test";
 const { ccclass, property } = _decorator;
-
-
 
 @ccclass('PlayerControl')
 export class PlayerControl extends Component {
+    @property(test)
+    enim : test = null;
+
     @property(animation.AnimationController)
     animationController: animation.AnimationController = null;
 
@@ -26,8 +28,6 @@ export class PlayerControl extends Component {
 
     private _maxPower: number = 10;
 
-    // private _isPressed: boolean = false;
-
     protected onLoad(): void {
         game.on(ENUM_GAME_EVENT.PLAYER_FALL, this.playerFalling, this);
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -35,7 +35,7 @@ export class PlayerControl extends Component {
 
 
     public onRightSwipe(): void {
-        if (this._position.x >= 340) return;
+        if (this._position.x >= 340 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         this._position.add3f(340, 0, 0)
         tween(this.node)
@@ -46,7 +46,7 @@ export class PlayerControl extends Component {
     }
 
     public onLeftSwipe(): void {
-        if (this._position.x <= -340) return;
+        if (this._position.x <= -340 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         this._position.add3f(-340, 0, 0)
         tween(this.node)
@@ -65,6 +65,9 @@ export class PlayerControl extends Component {
                 easing: "cubicInOut", onComplete: () => {
                     this._status = ENUM_PLAYER_STATUS.CLIMB
                 }
+            })
+            .call(()=>{
+                this._position = this.node.getPosition();
             })
             .start();
     }
@@ -105,17 +108,21 @@ export class PlayerControl extends Component {
         this._status = ENUM_PLAYER_STATUS.CLIMB;
     }
 
+
     update(dt: number) {
         if (GameManager.instance.state == MAIN_GAMESTATE.START) {
             if (this._status != ENUM_PLAYER_STATUS.CLIMB) return;
-
             this._power = Math.max(0, this._power - 6 * dt);
 
-            this._position.add3f(0, dt * this._speed * (1 + this._power * 5 / this._maxPower), 0);
-            let currentPos = this.node.getPosition();
+            if(this.enim.moveState === MOVE_STATE.STAY) return;
+            else{
+                this._position.add3f(0, dt * this._speed * (1 + this._power * 5 / this._maxPower), 0);
+                let currentPos = this.node.getPosition();
 
-            this._position = currentPos.lerp(this._position, dt);
-            this.node.setPosition(this._position)
+                this._position = currentPos.lerp(this._position, dt);
+                this.node.setPosition(this._position)
+            }
+            
         }
     }
 

@@ -74,7 +74,13 @@ export class GameManager extends Component {
 				this.fragmentContainer.removeAllChildren();
 				let dataSet = ResourceManager.instance.getFragmentData()
 				let fragmentList = ResourceManager.instance.getLevelData()[0];
-				let y = 1;
+
+
+				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 1500 * -1))
+				
+
+
+				let y = 0;
 				for (let i of fragmentList) {
 					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 1500 * y))
 					let fragmentCmp = fragmentNode.getComponent(Fragment);
@@ -117,11 +123,12 @@ export class GameManager extends Component {
 
 	private onMagicPocketEffect() {
 		let currentFragmentIndex = this.playerDataManager.currentFragmentIndex;
-		let fragment = this.fragmentContainer.children[currentFragmentIndex];
+		let fragment = this.fragmentContainer.children[currentFragmentIndex+2];
 		if (fragment) {
 			fragment.getComponent(Fragment).magicPocketEffect();
 		}
 	}
+
 
 }
 
