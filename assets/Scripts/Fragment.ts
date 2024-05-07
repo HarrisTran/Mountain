@@ -34,17 +34,17 @@ export class Fragment extends Component {
     rendor(){
         for(let i = 0; i< this.line1.length;i++){
             if(this.line1[i] !== ""){
-                PoolManager.instance.getNode(this.line1[i],this.ladder1,new Vec3(0,165*(4-i)))
+                PoolManager.instance.getNode(this.line1[i],this.ladder1,new Vec3(0,250*(4-i)))
             }
         }
         for(let i = 0; i< this.line2.length; i++){
             if(this.line2[i] !== ""){
-                PoolManager.instance.getNode(this.line2[i],this.ladder2,new Vec3(0,165*(4-i)))
+                PoolManager.instance.getNode(this.line2[i],this.ladder2,new Vec3(0,250*(4-i)))
             }
         }
         for(let i = 0; i< this.line3.length; i++){
             if(this.line3[i] !== ""){
-                PoolManager.instance.getNode(this.line3[i],this.ladder3,new Vec3(0,165*(4-i)))
+                PoolManager.instance.getNode(this.line3[i],this.ladder3,new Vec3(0,250*(4-i)))
             }
         }
     }

@@ -1295,7 +1295,7 @@
     "_offset": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 740
+      "y": 1100
     },
     "_size": {
       "__type__": "cc.Size",
@@ -1378,7 +1378,6 @@
       "__id__": 0
     },
     "fileId": "fcu8DVA6FLU4zHcTSl6DA7",
-    "instance": null,
-    "targetOverrides": null
+    "instance": null
   }
 ]

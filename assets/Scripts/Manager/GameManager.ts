@@ -76,13 +76,13 @@ export class GameManager extends Component {
 				let fragmentList = ResourceManager.instance.getLevelData()[0];
 
 
-				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 1500 * -1))
+				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * -1))
 				
 
 
 				let y = 0;
 				for (let i of fragmentList) {
-					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 1500 * y))
+					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * y))
 					let fragmentCmp = fragmentNode.getComponent(Fragment);
 					fragmentCmp.init({
 						id: y,
