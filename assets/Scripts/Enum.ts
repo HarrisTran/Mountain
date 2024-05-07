@@ -63,4 +63,4 @@ export enum ENUM_AUDIO_CLIP {
     
 }
 
-export const Speed = 33000;
+export const Speed = 20000;
