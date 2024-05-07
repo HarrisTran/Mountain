@@ -59,6 +59,7 @@ export enum ENUM_UI_TYPE {
 }
 
 export enum ENUM_AUDIO_CLIP {
+    BGM
     
 }
 
