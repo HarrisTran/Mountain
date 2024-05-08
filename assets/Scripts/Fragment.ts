@@ -1,8 +1,8 @@
-import { _decorator, Collider2D, Component, Contact2DType, instantiate, IPhysics2DContact, Node, RigidBody2D, v2, Vec3 } from 'cc';
+import { _decorator, Collider2D, Component, Contact2DType, instantiate, IPhysics2DContact, Node, ParticleSystem, RigidBody2D, v2, Vec3 } from 'cc';
 import { ENUM_COLLIDER_TAG } from './Enum';
 import { GameManager } from './Manager/GameManager';
 import PoolManager from './Manager/PoolManager';
-import { delay } from './Utils';
+import { delay, playParticleSystemRecursively } from './Utils';
 const { ccclass, property } = _decorator;
 
 export interface IFragment {
@@ -63,6 +63,7 @@ export class Fragment extends Component {
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list1Pos.push(node.getPosition());
                 list1Node.push(node)
+                playParticleSystemRecursively(node.getChildByName("ChangeCoinFx").getComponent(ParticleSystem));
             }
         })
 
@@ -73,6 +74,7 @@ export class Fragment extends Component {
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list2Pos.push(node.getPosition());
                 list2Node.push(node)
+                playParticleSystemRecursively(node.getChildByName("ChangeCoinFx").getComponent(ParticleSystem));
             }
         })
 
@@ -83,37 +85,35 @@ export class Fragment extends Component {
             if(node.name === "O1" || node.name === "O2" || node.name === "O3" || node.name === "O4"){
                 list3Pos.push(node.getPosition());
                 list3Node.push(node)
+                playParticleSystemRecursively(node.getChildByName("ChangeCoinFx").getComponent(ParticleSystem));
             }
         })
         
 
-        list1Pos.forEach(v => {
+        list1Pos.forEach(async v => {
             let node = PoolManager.instance.getPrefab("B1");
-            setTimeout(() => {
-                let i = instantiate(node);
-                i.parent = this.ladder1;
-                i.setPosition(v.clone());
-            }, 10);
+            await delay(10);
+            let i = instantiate(node);
+            i.parent = this.ladder1;
+            i.setPosition(v.clone());
         })
 
 
-        list2Pos.forEach(v => {
+        list2Pos.forEach(async v => {
             let node = PoolManager.instance.getPrefab("B1");
-            setTimeout(() => {
-                let i = instantiate(node);
-                i.parent = this.ladder2;
-                i.setPosition(v.clone());
-            }, 10);
+            await delay(10);
+            let i = instantiate(node);
+            i.parent = this.ladder2;
+            i.setPosition(v.clone());
         })
 
 
-        list3Pos.forEach(v => {
+        list3Pos.forEach(async v => {
             let node = PoolManager.instance.getPrefab("B1");
-            setTimeout(() => {
-                let i = instantiate(node);
-                i.parent = this.ladder3;
-                i.setPosition(v.clone());
-            }, 10);
+            await delay(10);
+            let i = instantiate(node);
+            i.parent = this.ladder3;
+            i.setPosition(v.clone());
         })
 
         list1Node.map(n=>{

@@ -6,8 +6,8 @@ export enum MOVE_STATE {
     MOVE,
 }
 
-@ccclass('test')
-export class test extends Component {
+@ccclass('ClimbHepler')
+export class ClimbHepler extends Component {
     public moveState : MOVE_STATE ;
 
     public stay () {

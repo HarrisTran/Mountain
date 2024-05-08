@@ -1,8 +1,9 @@
-import { _decorator, EventTouch, game, Label, Node, Vec2 } from 'cc';
-import { ENUM_GAME_EVENT} from '../Enum';
+import { _decorator, EventTouch, game, Label, Node, ProgressBar, Vec2 } from 'cc';
+import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT} from '../Enum';
 import { GameManager } from '../Manager/GameManager';
 import LayerBase from '../Manager/LayerBase';
 import { PlayerControl } from '../Player/PlayerControl';
+import { delay } from '../Utils';
 const { ccclass, property, menu } = _decorator;
 
 
@@ -10,17 +11,33 @@ const { ccclass, property, menu } = _decorator;
 @menu('Panel/GamePanel')
 export class GamePanel extends LayerBase {
     @property(Label)
+    timer: Label = null;
+
+    @property(Label)
     scoreText: Label = null;
 
     @property(PlayerControl)
     playerController: PlayerControl = null;
 
+    
     private _touchStartPos = new Vec2();
     private _swipeMinLength : number = 120;
 
     protected onLoad(): void {
         this.node.on(Node.EventType.TOUCH_START,this.onTouchStart,this);
         this.node.on(Node.EventType.TOUCH_END,this.onTouchEnd,this);
+    }
+d
+    protected async onEnable() {
+        this.timer.node.active = false;
+        // this.timer.string = '3';
+        // await delay(1000);
+        // this.timer.string = '2';
+        // await delay(1000);
+        // this.timer.string = '1';
+        // await delay(1000);
+        // GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.START);
+        // this.timer.node.active = false;
     }
 
     private onTouchStart(e : EventTouch){

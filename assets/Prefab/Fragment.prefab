@@ -44,10 +44,13 @@
       },
       {
         "__id__": 62
+      },
+      {
+        "__id__": 64
       }
     ],
     "_prefab": {
-      "__id__": 64
+      "__id__": 66
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -502,7 +505,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1080,
+      "width": 1200,
       "height": 2342
     },
     "_anchorPoint": {
@@ -573,10 +576,10 @@
     "__prefab": {
       "__id__": 24
     },
-    "_alignFlags": 5,
+    "_alignFlags": 45,
     "_target": null,
-    "_left": 0,
-    "_right": 0,
+    "_left": -60,
+    "_right": -60,
     "_top": -1,
     "_bottom": -1,
     "_horizontalCenter": 0,
@@ -587,7 +590,7 @@
     "_isAbsBottom": true,
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
-    "_originalWidth": 0,
+    "_originalWidth": 1080,
     "_originalHeight": 2340,
     "_alignMode": 2,
     "_lockFlags": 0,
@@ -639,7 +642,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -340,
+      "x": -380,
       "y": 0,
       "z": 0
     },
@@ -1063,7 +1066,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 340,
+      "x": 380,
       "y": 0,
       "z": 0
     },
@@ -1260,7 +1263,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1000,
+      "width": 1080,
       "height": 2340
     },
     "_anchorPoint": {
@@ -1370,6 +1373,42 @@
     "fileId": "e4iX1NDPVH46Yfy+4SWyU4"
   },
   {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 65
+    },
+    "_alignFlags": 40,
+    "_target": null,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
+    "_horizontalCenter": 0,
+    "_verticalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 1000,
+    "_originalHeight": 0,
+    "_alignMode": 2,
+    "_lockFlags": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "749QX+2JBONamE3pfKOLDe"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -1378,6 +1417,7 @@
       "__id__": 0
     },
     "fileId": "fcu8DVA6FLU4zHcTSl6DA7",
-    "instance": null
+    "instance": null,
+    "targetOverrides": null
   }
 ]

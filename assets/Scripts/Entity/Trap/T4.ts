@@ -2,10 +2,11 @@ import { Contact2DType } from 'cc';
 import { Collider2D, IPhysics2DContact } from 'cc';
 import { BoxCollider2D } from 'cc';
 import { _decorator, Component, Node } from 'cc';
-import { ENUM_COLLIDER_TAG, ENUM_GAME_EVENT } from '../../Enum';
+import { ENUM_ADUDIO_CLIP, ENUM_COLLIDER_TAG, ENUM_GAME_EVENT } from '../../Enum';
 import { RigidBody2D } from 'cc';
 import { ERigidBody2DType } from 'cc';
 import { Vec2 } from 'cc';
+import { GameManager } from '../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('T4')
@@ -23,6 +24,7 @@ export class T4 extends Component {
 
     private viewColliderHandle(self: Collider2D, other: Collider2D, contact: IPhysics2DContact){
         if(other.tag === ENUM_COLLIDER_TAG.PLAYER){
+            GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ACTIVE_STALACTILE)
             this.node.getComponent(RigidBody2D).linearVelocity = new Vec2(0,-20);
         }
     }

@@ -5,10 +5,11 @@ import { Collider2D } from 'cc';
 import { BoxCollider2D } from 'cc';
 import { Vec3 } from 'cc';
 import { _decorator, Component, Node } from 'cc';
-import { ENUM_COLLIDER_TAG, ENUM_O3_STATUS } from '../../Enum';
+import { ENUM_ADUDIO_CLIP, ENUM_COLLIDER_TAG, ENUM_O3_STATUS } from '../../Enum';
 import { v3 } from 'cc';
 import { tween } from 'cc';
 import { v2 } from 'cc';
+import { GameManager } from '../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('O3')
@@ -32,6 +33,7 @@ export class O3 extends Component {
 
     private inViewColliderHandle(self: Collider2D,other: Collider2D, contact: IPhysics2DContact){
         if(other.tag === ENUM_COLLIDER_TAG.PLAYER && this._status === ENUM_O3_STATUS.IDLE){
+            GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.CREATURE_BIRDBAT);
             this._status = ENUM_O3_STATUS.FLY
             let x = 340;
             const actMoveFarLeft = tween(this.node).by(1,{position: v3(-x*2,0)});

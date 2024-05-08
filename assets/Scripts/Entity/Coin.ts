@@ -1,15 +1,18 @@
-import { _decorator, CCInteger, Collider2D, Component, Contact2DType, IPhysics2DContact } from 'cc';
-import { ENUM_COLLIDER_TAG } from '../Enum';
+import { _decorator, CCInteger, Collider2D, Component, Contact2DType, IPhysics2DContact, ParticleSystem } from 'cc';
+import { ENUM_ADUDIO_CLIP, ENUM_COLLIDER_TAG } from '../Enum';
 import { DestroyableNode } from './DestroyableNode';
 import { GameManager } from '../Manager/GameManager';
 import { tween } from 'cc';
 import { math } from 'cc';
 import { Vec3 } from 'cc';
 import PoolManager from '../Manager/PoolManager';
+import { delay, playParticleSystemRecursively } from '../Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('Coin')
 export class Coin extends Component {
+    @property(ParticleSystem)
+    claimEffect: ParticleSystem = null;
 
     private _picked: boolean = false;
     
@@ -17,8 +20,11 @@ export class Coin extends Component {
         this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
     }
 
-    onBeginContact(self: Collider2D, other: Collider2D, contact: IPhysics2DContact) {
+    async onBeginContact(self: Collider2D, other: Collider2D, contact: IPhysics2DContact) {
         if (other.tag === ENUM_COLLIDER_TAG.PLAYER) {
+            playParticleSystemRecursively(this.claimEffect);
+            GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.COIN);
+            await delay(100);
             this.node.getComponent(DestroyableNode).isDestroyable = true;
         }
 

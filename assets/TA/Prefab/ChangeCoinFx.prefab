@@ -48,7 +48,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -243,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -3492,9 +3492,9 @@
       "__id__": 278
     },
     "duration": 2,
-    "loop": true,
+    "loop": false,
     "simulationSpeed": 1,
-    "playOnAwake": true,
+    "playOnAwake": false,
     "gravityModifier": {
       "__id__": 279
     },
@@ -4116,6 +4116,6 @@
       "__id__": 0
     },
     "fileId": "107E0Hg6tMj47T3fQJuBPt",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]

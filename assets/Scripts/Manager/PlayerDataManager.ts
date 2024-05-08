@@ -9,10 +9,12 @@ export class BoosterBase {
 }
 export class PlayerData {
     public score : number;
+    public isFirstPlay: boolean;
     public currentFragmentIndex: number;
     public activeBooster: BoosterBase[];
     constructor(){
         this.score = 0;
+        this.isFirstPlay = true;
         this.currentFragmentIndex = 0;
         this.activeBooster = [];
     }
@@ -53,6 +55,10 @@ export class PlayerDataManager{
 
     public getActiveBoosters() {
         return this._playerData.activeBooster;
+    }
+
+    public setPlayed(){
+        this._playerData.isFirstPlay = false;
     }
 
 }

@@ -1,11 +1,13 @@
 import { _decorator, Component, Enum, game, Node, Prefab, Vec3 } from 'cc';
-import { ENUM_GAME_EVENT, GamePopupCode, MAIN_GAMESTATE } from '../Enum';
+import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, MAIN_GAMESTATE } from '../Enum';
 import { Fragment } from '../Fragment';
+import { delay } from '../Utils';
+import { AudioManager } from './AudioManager';
+import { IManager } from './IManager';
 import { LayerManager } from './LayerManager';
 import { PlayerDataManager } from './PlayerDataManager';
-import ResourceManager from './ResourceManager';
 import PoolManager from './PoolManager';
-import { IManager } from './IManager';
+import ResourceManager from './ResourceManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -16,6 +18,7 @@ export class GameManager extends Component {
 	}
 	@property({ type: Enum(MAIN_GAMESTATE) }) public defaultState: MAIN_GAMESTATE = MAIN_GAMESTATE.MENU;
 	@property(LayerManager) uiManager: LayerManager = null;
+	@property(AudioManager) audioManager: AudioManager = null;
 	@property(Node) fragmentContainer: Node = null;
 	@property(Node) player: Node = null;
 	@property(Prefab) fragment: Prefab = null;
@@ -74,12 +77,7 @@ export class GameManager extends Component {
 				this.fragmentContainer.removeAllChildren();
 				let dataSet = ResourceManager.instance.getFragmentData()
 				let fragmentList = ResourceManager.instance.getLevelData()[0];
-
-
 				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * -1))
-				
-
-
 				let y = 0;
 				for (let i of fragmentList) {
 					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * y))
@@ -105,9 +103,11 @@ export class GameManager extends Component {
 
 	private onGameStart() {
 		this.setState(MAIN_GAMESTATE.START);
+		this.audioManager.playSfx(ENUM_ADUDIO_CLIP.BUTTON_PLAY)
 	}
 
-	private onGameOver() {
+	private async onGameOver() {
+		await delay(1000);
 		this.setState(MAIN_GAMESTATE.GAME_OVER);
 	}
 

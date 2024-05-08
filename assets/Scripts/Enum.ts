@@ -18,6 +18,7 @@ export enum ENUM_PLAYER_STATUS {
     CLIMB,
     FALL,
     JUMP,
+    DEAD,
 }
 
 
@@ -58,9 +59,29 @@ export enum ENUM_UI_TYPE {
     MENU_LAYER
 }
 
-export enum ENUM_AUDIO_CLIP {
-    BGM
-    
+export enum ENUM_ADUDIO_CLIP {
+    ACTIVE_LANDSLIDE = 'active_landslide',
+    ACTIVE_LIGHTNING = 'active_lightning',
+    ACTIVE_SNOWBALL = 'active_snowball',
+    ACTIVE_STALACTILE = 'active_stalactile',
+    ALERT = 'alert',
+    BGM = 'BGM',
+    BUTTON_PLAY = 'button_play',
+    COIN = 'coin',
+    CREATURE_BIRDBAT = 'creature_birdbat',
+    CREATURE_MONSTER = 'creature_monster',
+    IMPACT_HARD = 'impact_hard',
+    IMPACT_SOFT = 'impact_soft',
+    ITEM_HELMET = 'item_helmet',
+    ITEM_MAGNET = 'item_magnet',
+    ITEM_SPEED = 'item_speed',
+    ITEM_SWAP = 'item_swap',
+    ITEM_x2 = 'item_x2',
+    PLAYER_JUMP_01 = 'player_jump_01',
+    PLAYER_JUMP_02 = 'player_jump_02',
+    PLAYER_SLIP = 'player_slip',
+    START = 'start',
 }
+
 
 export const Speed = 20000;

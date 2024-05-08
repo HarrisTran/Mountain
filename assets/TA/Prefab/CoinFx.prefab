@@ -45,8 +45,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -6.268,
-      "y": 149.722,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -58,9 +58,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 2,
+      "y": 2,
+      "z": 2
     },
     "_mobility": 0,
     "_layer": 1073741824,
@@ -98,9 +98,9 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 3.078,
-      "y": 31.908,
-      "z": 0
+      "x": 0,
+      "y": 0,
+      "z": -10
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -945,9 +945,9 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 3.078,
-      "y": 31.908,
-      "z": 0
+      "x": 0,
+      "y": 0,
+      "z": -10
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -1790,9 +1790,9 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 3.078,
-      "y": 31.908,
-      "z": 0
+      "x": 0,
+      "y": 0,
+      "z": -10
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -2655,9 +2655,9 @@
       "__id__": 213
     },
     "duration": 5,
-    "loop": true,
+    "loop": false,
     "simulationSpeed": 1,
-    "playOnAwake": true,
+    "playOnAwake": false,
     "gravityModifier": {
       "__id__": 214
     },
@@ -3279,6 +3279,6 @@
       "__id__": 0
     },
     "fileId": "b4z8S+tWhHy40zbLHbaqNR",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]

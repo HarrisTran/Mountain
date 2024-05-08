@@ -182,9 +182,9 @@
       "__id__": 14
     },
     "duration": 1,
-    "loop": false,
+    "loop": true,
     "simulationSpeed": 1,
-    "playOnAwake": false,
+    "playOnAwake": true,
     "gravityModifier": {
       "__id__": 15
     },
@@ -262,8 +262,8 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 3,
-    "constantMin": 0.5,
-    "constantMax": 1,
+    "constantMin": 2,
+    "constantMax": 3,
     "multiplier": 1
   },
   {
@@ -1118,9 +1118,9 @@
       "__id__": 84
     },
     "duration": 1,
-    "loop": false,
+    "loop": true,
     "simulationSpeed": 1,
-    "playOnAwake": false,
+    "playOnAwake": true,
     "gravityModifier": {
       "__id__": 85
     },
@@ -1198,8 +1198,8 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 3,
-    "constantMin": 0.5,
-    "constantMax": 1,
+    "constantMin": 2,
+    "constantMax": 3,
     "multiplier": 1
   },
   {
@@ -1217,8 +1217,8 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 3,
-    "constantMin": 1,
-    "constantMax": 2,
+    "constantMin": 2,
+    "constantMax": 3,
     "multiplier": 1
   },
   {
@@ -2575,6 +2575,7 @@
       "__id__": 0
     },
     "fileId": "d40ZmaYeVCSKDgNqAfD2E5",
+    "instance": null,
     "targetOverrides": null
   }
 ]

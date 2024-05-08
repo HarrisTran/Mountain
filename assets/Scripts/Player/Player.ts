@@ -4,12 +4,13 @@ import { MagicPocketBooster } from "../Entity/Booster/MagicPocketBooster";
 import { MagnetBooster } from "../Entity/Booster/MagnetBooster";
 import { SpeedUpBooster } from "../Entity/Booster/SpeedUpBooster";
 import { x2Booster } from "../Entity/Booster/x2Booster";
-import { ENUM_COLLIDER_TAG, ENUM_GAME_EVENT } from "../Enum";
+import { ENUM_ADUDIO_CLIP, ENUM_COLLIDER_TAG, ENUM_GAME_EVENT } from "../Enum";
 import { GameManager } from "../Manager/GameManager";
 import { PlayerControl } from "./PlayerControl";
 import { BoosterBase } from "../Manager/PlayerDataManager";
 import { Node } from "cc";
 import { DestroyableNode } from "../Entity/DestroyableNode";
+import { delay } from "../Utils";
 
 
 const { ccclass, property } = _decorator;
@@ -31,7 +32,7 @@ export class Player extends Component {
 
     
 
-    onBeginContact(self: Collider2D, other: Collider2D, contact : IPhysics2DContact)
+    async onBeginContact(self: Collider2D, other: Collider2D, contact : IPhysics2DContact)
     {
         let data = GameManager.instance.playerDataManager
         switch (other.tag) {
@@ -47,45 +48,47 @@ export class Player extends Component {
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
                 this._scoreMultiplier = 2;
                 data.addBooster(new x2Booster())
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_x2);
                 break;
             case ENUM_COLLIDER_TAG.B4:
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
                 this.bubbleShield.active = true;
                 this._shieldActive = true;
                 data.addBooster(new HelmetBooster())
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_HELMET);
                 break;
             case ENUM_COLLIDER_TAG.B5:
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
-                
-                setTimeout(() => {
-                    this.magnetArea.active = true;
-                }, 50);
-
+                await delay(50);
+                this.magnetArea.active = true;
                 data.addBooster(new MagnetBooster())
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_MAGNET);
                 break;
             case ENUM_COLLIDER_TAG.B6:
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
                 this.getComponent(PlayerControl).updateSpeed();
                 data.addBooster(new SpeedUpBooster())
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_SPEED);
                 break;
             case ENUM_COLLIDER_TAG.B7:
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
                 game.emit(ENUM_GAME_EVENT.MAGIC_POCKET_EFFECT);
                 data.addBooster(new MagicPocketBooster())
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_SWAP)
                 break;
             case ENUM_COLLIDER_TAG.O1:
             case ENUM_COLLIDER_TAG.O2:
             case ENUM_COLLIDER_TAG.O3:
             case ENUM_COLLIDER_TAG.O4:
             case ENUM_COLLIDER_TAG.T4:
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.IMPACT_HARD)
                 game.emit(ENUM_GAME_EVENT.GAME_OVER);
                 break;
             case ENUM_COLLIDER_TAG.T1:
-                break;
             case ENUM_COLLIDER_TAG.T2:
-                break;
             case ENUM_COLLIDER_TAG.T3:
             case ENUM_COLLIDER_TAG.T5:
+                GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.IMPACT_SOFT)
                 game.emit(ENUM_GAME_EVENT.PLAYER_FALL);
                 break;
             default:
