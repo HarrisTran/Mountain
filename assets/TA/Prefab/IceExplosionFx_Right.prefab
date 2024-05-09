@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "IceExplosionFx",
+    "_name": "IceExplosionFx_Right",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "IceExplosionFx",
+    "_name": "IceExplosionFx_Right",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -42,8 +42,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -163.425,
-      "y": 227.87,
+      "x": 154.908,
+      "y": 222.87,
       "z": 0
     },
     "_lrot": {
@@ -1951,7 +1951,7 @@
       "__id__": 151
     },
     "duration": 2,
-    "loop": false,
+    "loop": true,
     "simulationSpeed": 2,
     "playOnAwake": true,
     "gravityModifier": {
@@ -2575,6 +2575,6 @@
       "__id__": 0
     },
     "fileId": "d40ZmaYeVCSKDgNqAfD2E5",
-    "targetOverrides": []
+    "targetOverrides": null
   }
 ]

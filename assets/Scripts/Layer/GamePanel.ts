@@ -27,7 +27,7 @@ export class GamePanel extends LayerBase {
         this.node.on(Node.EventType.TOUCH_START,this.onTouchStart,this);
         this.node.on(Node.EventType.TOUCH_END,this.onTouchEnd,this);
     }
-d
+
     protected async onEnable() {
         this.timer.node.active = true;
         this.timer.string = '3';

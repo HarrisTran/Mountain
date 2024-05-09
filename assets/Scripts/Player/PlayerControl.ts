@@ -1,7 +1,6 @@
 import { _decorator, Animation, Component, EventKeyboard, game, input, Input, KeyCode, ProgressBar, RealCurve, tween, v3, Vec3 } from "cc";
-import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, ENUM_PLAYER_STATUS, MAIN_GAMESTATE, Speed } from '../Enum';
+import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, ENUM_PLAYER_STATUS, Speed } from '../Enum';
 import { GameManager } from '../Manager/GameManager';
-import { delay } from "../Utils";
 import { ClimbHepler, MOVE_STATE } from "./ClimbHepler";
 import { Player } from "./Player";
 import { Tutorial } from "./Tutorial";
@@ -51,10 +50,17 @@ export class PlayerControl extends Component {
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
     }
 
+    protected lateUpdate(dt: number): void {
+        this.node.position = this.node.position.clampf(
+            new Vec3(-400, this.node.position.y - 1000),
+            new Vec3(400, this.node.position.y + 1000)
+        )
 
+        
+    }
 
-    public async onRightSwipe(){
-        if (this._position.x >= 400 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
+    public onRightSwipe(){
+        if (this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.PLAYER_JUMP_01)
         if(!this.tutorial.swipeRightDone) {
@@ -62,13 +68,21 @@ export class PlayerControl extends Component {
             this.tutorial.swipeRightDone = true;
         }
         this._position.add3f(400, 0, 0)
+
         tween(this.node)
-        .to(0.8,{position: this._position},{easing : k => this.jumpCurve.evaluate(k),onComplete: () => this._status = ENUM_PLAYER_STATUS.CLIMB})
+        .to(0.67,{position: this._position},
+            {
+                easing : k => this.jumpCurve.evaluate(k),
+                onComplete: () => {
+                    this._status = ENUM_PLAYER_STATUS.CLIMB
+                    this.animationMotion.play("climb")
+                }
+            })
         .start();
         this.animationMotion.play("jump_right")
-        await delay(500);
-        this.animationMotion.play("climb")
-        this._status = ENUM_PLAYER_STATUS.CLIMB;
+        // await delay(500);
+        // this.animationMotion.play("climb")
+        // this._status = ENUM_PLAYER_STATUS.CLIMB;
     }
 
     private onPlayerDie(){
@@ -77,8 +91,8 @@ export class PlayerControl extends Component {
         this._status = ENUM_PLAYER_STATUS.DEAD;
     }
 
-    public async onLeftSwipe(){
-        if (this._position.x <= -400 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
+    public onLeftSwipe(){
+        if (this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.PLAYER_JUMP_02)
         if(!this.tutorial.swipeLeftDone) {
@@ -87,12 +101,18 @@ export class PlayerControl extends Component {
         }
         this._position.add3f(-400, 0, 0)
         tween(this.node)
-        .to(0.8,{position: this._position},{easing : k => this.jumpCurve.evaluate(k), onComplete: () => this._status = ENUM_PLAYER_STATUS.CLIMB})
+        .to(0.67,{position: this._position},
+            {
+                easing : k => this.jumpCurve.evaluate(k), 
+                onComplete: () => {
+                    this._status = ENUM_PLAYER_STATUS.CLIMB
+                    this.animationMotion.play("climb")
+                }
+            })
         .start();
         this.animationMotion.play("jump_left")
-        await delay(500);
-        this.animationMotion.play("climb")
-        this._status = ENUM_PLAYER_STATUS.CLIMB;
+        // await delay(500);
+        // this._status = ENUM_PLAYER_STATUS.CLIMB;
     }
 
 
@@ -165,7 +185,7 @@ export class PlayerControl extends Component {
             this._power = Math.max(0, this._power - 6 * dt);
             this.energyProgressBar.progress = this._power/this._maxPower;
             if(this.climbHepler.moveState === MOVE_STATE.MOVE){
-                this._position.add3f(0, dt * this._speed * (1 + this._power * 5 / this._maxPower), 0);
+                this._position.add3f(0, dt * this._speed * (1 + this._power * 2 / this._maxPower), 0);
                 let currentPos = this.node.getPosition();
                 this._position = currentPos.lerp(this._position, dt);
                 this.node.setPosition(this._position);

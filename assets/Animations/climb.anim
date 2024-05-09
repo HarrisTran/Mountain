@@ -274,7 +274,7 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/LeftFootPrintFx"
+    "path": "/vfx/IceExplosionFx_Left"
   },
   {
     "__type__": "cc.animation.EmbeddedPlayer",
@@ -290,7 +290,7 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/RightFootPrintFx"
+    "path": "/vfx/IceExplosionFx_Right"
   },
   {
     "__type__": "cc.animation.EmbeddedPlayer",
@@ -306,7 +306,7 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/IceExplosionFx_Left"
+    "path": "/vfx/LeftFootPrintFx"
   },
   {
     "__type__": "cc.animation.EmbeddedPlayer",
@@ -322,7 +322,7 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/IceExplosionFx_Left"
+    "path": "/vfx/RightFootPrintFx"
   },
   {
     "__type__": "cc.AnimationClipAdditiveSettings",
