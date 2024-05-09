@@ -1,5 +1,5 @@
 import { _decorator, EventTouch, game, Label, Node, ProgressBar, Vec2 } from 'cc';
-import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT} from '../Enum';
+import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, ENUM_PLAYER_STATUS} from '../Enum';
 import { GameManager } from '../Manager/GameManager';
 import LayerBase from '../Manager/LayerBase';
 import { PlayerControl } from '../Player/PlayerControl';
@@ -29,15 +29,17 @@ export class GamePanel extends LayerBase {
     }
 d
     protected async onEnable() {
+        this.timer.node.active = true;
+        this.timer.string = '3';
+        await delay(1000);
+        this.timer.string = '2';
+        await delay(1000);
+        this.timer.string = '1';
+        await delay(1000);
+        GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.START);
         this.timer.node.active = false;
-        // this.timer.string = '3';
-        // await delay(1000);
-        // this.timer.string = '2';
-        // await delay(1000);
-        // this.timer.string = '1';
-        // await delay(1000);
-        // GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.START);
-        // this.timer.node.active = false;
+
+        this.playerController.startMove();
     }
 
     private onTouchStart(e : EventTouch){

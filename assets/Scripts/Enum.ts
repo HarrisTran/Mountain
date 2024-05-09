@@ -15,6 +15,7 @@ export enum ENUM_O3_STATUS {
 }
 
 export enum ENUM_PLAYER_STATUS {
+    IDLE,
     CLIMB,
     FALL,
     JUMP,

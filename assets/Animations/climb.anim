@@ -6,12 +6,22 @@
     "__editorExtras__": {
       "embeddedPlayerGroups": [
         {
-          "key": "1715162256544",
+          "key": "1715221952953",
           "name": "particle-system",
           "type": "particle-system"
         },
         {
-          "key": "1715162570932",
+          "key": "1715221998010",
+          "name": "particle-system",
+          "type": "particle-system"
+        },
+        {
+          "key": "1715222018457",
+          "name": "particle-system",
+          "type": "particle-system"
+        },
+        {
+          "key": "1715222029329",
           "name": "particle-system",
           "type": "particle-system"
         }
@@ -78,10 +88,16 @@
       },
       {
         "__id__": 8
+      },
+      {
+        "__id__": 10
+      },
+      {
+        "__id__": 12
       }
     ],
     "_additiveSettings": {
-      "__id__": 10
+      "__id__": 14
     },
     "_auxiliaryCurveEntries": []
   },
@@ -247,10 +263,10 @@
   {
     "__type__": "cc.animation.EmbeddedPlayer",
     "__editorExtras__": {
-      "group": "1715162256544"
+      "group": "1715221952953"
     },
-    "begin": 0.4666666666666667,
-    "end": 0.6666666666666666,
+    "begin": 0,
+    "end": 0.08333333333333333,
     "reconciledSpeed": false,
     "playable": {
       "__id__": 7
@@ -258,15 +274,15 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/IceExplosionFxleft"
+    "path": "/vfx/LeftFootPrintFx"
   },
   {
     "__type__": "cc.animation.EmbeddedPlayer",
     "__editorExtras__": {
-      "group": "1715162570932"
+      "group": "1715221998010"
     },
-    "begin": 1.2833333333333334,
-    "end": 1.5666666666666667,
+    "begin": 0.3333333333333333,
+    "end": 0.4166666666666667,
     "reconciledSpeed": false,
     "playable": {
       "__id__": 9
@@ -274,7 +290,39 @@
   },
   {
     "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
-    "path": "/vfx/IceExplosionFxright"
+    "path": "/vfx/RightFootPrintFx"
+  },
+  {
+    "__type__": "cc.animation.EmbeddedPlayer",
+    "__editorExtras__": {
+      "group": "1715222018457"
+    },
+    "begin": 0.7666666666666667,
+    "end": 0.85,
+    "reconciledSpeed": false,
+    "playable": {
+      "__id__": 11
+    }
+  },
+  {
+    "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
+    "path": "/vfx/IceExplosionFx_Left"
+  },
+  {
+    "__type__": "cc.animation.EmbeddedPlayer",
+    "__editorExtras__": {
+      "group": "1715222029329"
+    },
+    "begin": 1.0833333333333333,
+    "end": 1.1666666666666667,
+    "reconciledSpeed": false,
+    "playable": {
+      "__id__": 13
+    }
+  },
+  {
+    "__type__": "cc.animation.EmbeddedParticleSystemPlayable",
+    "path": "/vfx/IceExplosionFx_Left"
   },
   {
     "__type__": "cc.AnimationClipAdditiveSettings",

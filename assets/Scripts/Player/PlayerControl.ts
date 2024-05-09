@@ -37,6 +37,14 @@ export class PlayerControl extends Component {
 
     private _maxPower: number = 10;
 
+    public get status(){
+        return this._status;
+    }
+
+    public set status(value : ENUM_PLAYER_STATUS){
+        this._status = value;
+    }
+
     protected onLoad(): void {
         game.on(ENUM_GAME_EVENT.PLAYER_FALL, this.playerFalling, this);
         game.on(ENUM_GAME_EVENT.GAME_OVER,this.onPlayerDie,this);
@@ -44,15 +52,16 @@ export class PlayerControl extends Component {
     }
 
 
+
     public async onRightSwipe(){
-        if (this._position.x >= 340 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
+        if (this._position.x >= 400 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.PLAYER_JUMP_01)
         if(!this.tutorial.swipeRightDone) {
             this.tutorial.hide();
             this.tutorial.swipeRightDone = true;
         }
-        this._position.add3f(340, 0, 0)
+        this._position.add3f(400, 0, 0)
         tween(this.node)
         .to(0.8,{position: this._position},{easing : k => this.jumpCurve.evaluate(k),onComplete: () => this._status = ENUM_PLAYER_STATUS.CLIMB})
         .start();
@@ -69,14 +78,14 @@ export class PlayerControl extends Component {
     }
 
     public async onLeftSwipe(){
-        if (this._position.x <= -340 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
+        if (this._position.x <= -400 || this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
         this._status = ENUM_PLAYER_STATUS.JUMP;
         GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.PLAYER_JUMP_02)
         if(!this.tutorial.swipeLeftDone) {
             this.tutorial.hide();
             this.tutorial.swipeLeftDone = true;
         }
-        this._position.add3f(-340, 0, 0)
+        this._position.add3f(-400, 0, 0)
         tween(this.node)
         .to(0.8,{position: this._position},{easing : k => this.jumpCurve.evaluate(k), onComplete: () => this._status = ENUM_PLAYER_STATUS.CLIMB})
         .start();
@@ -141,25 +150,26 @@ export class PlayerControl extends Component {
     }
 
     start() {
-        this._status = ENUM_PLAYER_STATUS.CLIMB;
+        this.animationMotion.stop();
+        this.status = ENUM_PLAYER_STATUS.IDLE;
+    }
+
+    startMove(){
+        this.animationMotion.play("climb")
+        this.status = ENUM_PLAYER_STATUS.CLIMB;
     }
 
 
     update(dt: number) {
-        if (GameManager.instance.state == MAIN_GAMESTATE.START) {
-            if (this._status != ENUM_PLAYER_STATUS.CLIMB) return;
+        if(this.status == ENUM_PLAYER_STATUS.CLIMB){
             this._power = Math.max(0, this._power - 6 * dt);
             this.energyProgressBar.progress = this._power/this._maxPower;
-
-            if(this.climbHepler.moveState === MOVE_STATE.STAY) return;
-            else{
+            if(this.climbHepler.moveState === MOVE_STATE.MOVE){
                 this._position.add3f(0, dt * this._speed * (1 + this._power * 5 / this._maxPower), 0);
                 let currentPos = this.node.getPosition();
-
                 this._position = currentPos.lerp(this._position, dt);
-                this.node.setPosition(this._position)
+                this.node.setPosition(this._position);
             }
-            
         }
     }
 
