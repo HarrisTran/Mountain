@@ -182,7 +182,7 @@
       "__id__": 14
     },
     "duration": 1,
-    "loop": true,
+    "loop": false,
     "simulationSpeed": 1,
     "playOnAwake": true,
     "gravityModifier": {
@@ -1118,7 +1118,7 @@
       "__id__": 84
     },
     "duration": 1,
-    "loop": true,
+    "loop": false,
     "simulationSpeed": 1,
     "playOnAwake": true,
     "gravityModifier": {
@@ -1950,9 +1950,9 @@
     "startLifetime": {
       "__id__": 151
     },
-    "duration": 2,
+    "duration": 0.5,
     "loop": false,
-    "simulationSpeed": 2,
+    "simulationSpeed": 1,
     "playOnAwake": true,
     "gravityModifier": {
       "__id__": 152
@@ -2075,7 +2075,7 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 0,
-    "constant": 1,
+    "constant": 0.5,
     "multiplier": 1
   },
   {

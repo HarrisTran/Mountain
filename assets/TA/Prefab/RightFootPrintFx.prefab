@@ -39,8 +39,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 78.333,
-      "y": -268.333,
+      "x": 66.667,
+      "y": -231.667,
       "z": 0
     },
     "_lrot": {
@@ -181,7 +181,7 @@
     "duration": 1,
     "loop": false,
     "simulationSpeed": 1,
-    "playOnAwake": false,
+    "playOnAwake": true,
     "gravityModifier": {
       "__id__": 15
     },
@@ -238,7 +238,7 @@
     },
     "_prewarm": false,
     "_capacity": 100,
-    "_simulationSpace": 1,
+    "_simulationSpace": 0,
     "_id": ""
   },
   {
@@ -933,8 +933,8 @@
       "__id__": 79
     },
     "duration": 2,
-    "loop": true,
-    "simulationSpeed": 0,
+    "loop": false,
+    "simulationSpeed": 1,
     "playOnAwake": true,
     "gravityModifier": {
       "__id__": 80
@@ -988,7 +988,7 @@
     },
     "_prewarm": false,
     "_capacity": 100,
-    "_simulationSpace": 1,
+    "_simulationSpace": 0,
     "_id": ""
   },
   {
@@ -1557,6 +1557,6 @@
       "__id__": 0
     },
     "fileId": "3fjsAobpBAH4+1LFDPIro6",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]

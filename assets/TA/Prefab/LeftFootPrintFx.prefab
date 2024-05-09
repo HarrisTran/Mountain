@@ -39,8 +39,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -95,
-      "y": -183.333,
+      "x": -66.667,
+      "y": -231.667,
       "z": 0
     },
     "_lrot": {
@@ -238,7 +238,7 @@
     },
     "_prewarm": false,
     "_capacity": 100,
-    "_simulationSpace": 1,
+    "_simulationSpace": 0,
     "_id": ""
   },
   {
@@ -933,9 +933,9 @@
       "__id__": 79
     },
     "duration": 2,
-    "loop": true,
-    "simulationSpeed": 0,
-    "playOnAwake": true,
+    "loop": false,
+    "simulationSpeed": 1,
+    "playOnAwake": false,
     "gravityModifier": {
       "__id__": 80
     },
@@ -988,7 +988,7 @@
     },
     "_prewarm": false,
     "_capacity": 100,
-    "_simulationSpace": 1,
+    "_simulationSpace": 0,
     "_id": ""
   },
   {
@@ -1557,6 +1557,6 @@
       "__id__": 0
     },
     "fileId": "64ER05z6tDuqG0gL2qI7TA",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]
