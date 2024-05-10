@@ -1,6 +1,6 @@
-import { _decorator, Component, Enum, game, Node, Prefab, Vec3 } from 'cc';
+import { _decorator, Component, Enum, game, Node, Prefab, UITransform, Vec3 } from 'cc';
 import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, MAIN_GAMESTATE } from '../Enum';
-import { Fragment } from '../Fragment';
+import { Fragment, IFragment } from '../Fragment';
 import { delay } from '../Utils';
 import { AudioManager } from './AudioManager';
 import { IManager } from './IManager';
@@ -29,6 +29,9 @@ export class GameManager extends Component {
 	private _allManagers: IManager[] = [];
 	public resouceManager: ResourceManager;
 	public playerDataManager: PlayerDataManager;
+
+	private allFragment : string[];
+	private dataSet : Map<string, IFragment>;
 	
 
 	public get state() {
@@ -44,7 +47,7 @@ export class GameManager extends Component {
 	private _initializeGameEvent() {
 		game.on(ENUM_GAME_EVENT.GAME_START, this.onGameStart, this);
 		game.on(ENUM_GAME_EVENT.GAME_OVER, this.onGameOver, this);
-		game.on(ENUM_GAME_EVENT.MAGIC_POCKET_EFFECT, this.onMagicPocketEffect, this);
+		game.on(ENUM_GAME_EVENT.NEW_FRAGMENT,this.newFragmentHandler, this);
 	}
 
 	private _initializeAllManagers(): void {
@@ -70,30 +73,32 @@ export class GameManager extends Component {
 			case MAIN_GAMESTATE.LOADING:
 				this._initializeAllManagers();
 				break;
-			case MAIN_GAMESTATE.MENU:
+			case MAIN_GAMESTATE.MENU: 
 
 				break;
 			case MAIN_GAMESTATE.START:
 				this.fragmentContainer.removeAllChildren();
-				let dataSet = ResourceManager.instance.getFragmentData()
-				let fragmentList = ResourceManager.instance.getLevelData()[0];
+				this.dataSet = ResourceManager.instance.getFragmentData()
+				this.allFragment = ResourceManager.instance.getLevelData();
+				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * -2))
 				PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * -1))
+				
 				let y = 0;
-				for (let i of fragmentList) {
+				while (y < 2) {
+					let i = this.allFragment.shift();
 					let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(0, 2340 * y))
 					let fragmentCmp = fragmentNode.getComponent(Fragment);
 					fragmentCmp.init({
-						id: y,
-						line1: dataSet.get(i).line1,
-						line2: dataSet.get(i).line2,
-						line3: dataSet.get(i).line3,
+						line1: this.dataSet.get(i).line1,
+						line2: this.dataSet.get(i).line2,
+						line3: this.dataSet.get(i).line3,
 					})
 					fragmentCmp.rendor();
 					y++;
 				}
 				break;
 			case MAIN_GAMESTATE.GAME_OVER:
-
+				this.uiManager.gameOverPanel.shows();
 				break;
 			default:
 				break;
@@ -121,15 +126,32 @@ export class GameManager extends Component {
 		}
 	}
 
-	private onMagicPocketEffect() {
-		let currentFragmentIndex = this.playerDataManager.currentFragmentIndex;
-		let fragment = this.fragmentContainer.children[currentFragmentIndex+2];
-		if (fragment) {
-			fragment.getComponent(Fragment).magicPocketEffect();
+	public findFragmentPlayerClimbing(){
+		for(let i of this.fragmentContainer.children){
+			let playerPosition = this.player.getWorldPosition();
+			if(playerPosition.y > i.worldPosition.y - 1170 && playerPosition.y < i.worldPosition.y + 1170){
+				return i;
+			}
 		}
 	}
 
+	public async newFragmentHandler() {
+		let i = this.allFragment.shift();
+		let lastFragment = this.fragmentContainer.children.slice(-1)[0];
+		await delay(100);
+		let fragmentNode = PoolManager.instance.getNode(this.fragment, this.fragmentContainer, new Vec3(lastFragment.position.x,lastFragment.position.y+2340))
+		let fragmentCmp = fragmentNode.getComponent(Fragment);
+		fragmentCmp.init({
+			line1: this.dataSet.get(i).line1,
+			line2: this.dataSet.get(i).line2,
+			line3: this.dataSet.get(i).line3,
+		})
+		await delay(100);
+		fragmentCmp.rendor();
 
+		await delay(100);
+		this.fragmentContainer.children[0].removeFromParent();
+	}
 }
 
 

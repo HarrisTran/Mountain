@@ -1,4 +1,3 @@
-import { IManager } from "./IManager";
 
 export class BoosterBase {
     public duration : number;
@@ -10,12 +9,10 @@ export class BoosterBase {
 export class PlayerData {
     public score : number;
     public isFirstPlay: boolean;
-    public currentFragmentIndex: number;
     public activeBooster: BoosterBase[];
     constructor(){
         this.score = 0;
         this.isFirstPlay = true;
-        this.currentFragmentIndex = 0;
         this.activeBooster = [];
     }
 }
@@ -32,14 +29,6 @@ export class PlayerDataManager{
 
     public getScore(){
         return this._playerData.score;
-    }
-
-    public get currentFragmentIndex(){
-        return this._playerData.currentFragmentIndex;
-    }
-
-    public set currentFragmentIndex(i : number){
-        this._playerData.currentFragmentIndex = i;
     }
 
     public addBooster(booster: BoosterBase){

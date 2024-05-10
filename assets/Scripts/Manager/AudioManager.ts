@@ -15,6 +15,9 @@ export class AudioManager extends Component {
     @property([AudioClip])
     private audioLibrary : AudioClip[] = [];
 
+    @property(Node)
+    private soundButton : Node = null;
+
     private _audioClipSet: { [key: string]: AudioClip } = {};
 
     private _isMute = false;
@@ -27,6 +30,7 @@ export class AudioManager extends Component {
   
     public toggleMute(): boolean {
         this._isMute = !this._isMute;
+        this.soundButton.active = !this._isMute;
         this.setMute(this._isMute);
         return this._isMute;
     }

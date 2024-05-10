@@ -19,6 +19,7 @@ export class T3 extends Component {
     warningSymbol: Animation = null;
 
     protected onLoad(): void {
+        this.trapCollider.on(Contact2DType.BEGIN_CONTACT,this.cloudyAttack,this);
         this.viewCollider.on(Contact2DType.BEGIN_CONTACT,this.inViewColliderHandle,this);
         this.viewCollider.on(Contact2DType.END_CONTACT,this.outViewColliderHandle,this);
     }
@@ -26,19 +27,20 @@ export class T3 extends Component {
 
     private inViewColliderHandle(self: Collider2D, other: Collider2D, contact: IPhysics2DContact){
         if(other.tag === ENUM_COLLIDER_TAG.PLAYER){
-            
-            this.warningSymbol.node.active = true;
             this.warningSymbol.play("warning_appear")
-            
-
             GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ACTIVE_LIGHTNING)
         }
     }
 
     private outViewColliderHandle(self: Collider2D, other: Collider2D, contact: IPhysics2DContact){
         if(other.tag === ENUM_COLLIDER_TAG.PLAYER){
-            this.warningSymbol.node.active = false;
             this.warningSymbol.play("warning_disappear")
+        }
+    }
+
+    private cloudyAttack(self: Collider2D, other: Collider2D, contact: IPhysics2DContact){
+        if(other.tag === ENUM_COLLIDER_TAG.PLAYER){
+            this.node.getComponent(Animation).play("Ice_Scratch")
         }
     }
 
