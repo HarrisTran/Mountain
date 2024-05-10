@@ -26,7 +26,7 @@ export default class ResourceManager implements IManager {
 
 
     private _fragmentsData: Map<string, IFragment>;
-    private _levelsData;
+    private _levelsData : any[];
 
 
     static getInstance<T>(): T {
@@ -97,7 +97,6 @@ export default class ResourceManager implements IManager {
                 for (let asset of assets) {
                     let data = asset.json;
                     this._fragmentsData.set(data.id, {
-                        id: data.id,
                         line1: data.line1,
                         line2: data.line2,
                         line3: data.line3
@@ -134,6 +133,6 @@ export default class ResourceManager implements IManager {
     }
 
     public getLevelData() {
-        return this._levelsData;
+        return this._levelsData.reduce((acc,value)=>acc.concat(value),[]);
     }
 }

@@ -87,9 +87,12 @@ export class PlayerControl extends Component {
 
     private onPlayerDie(){
         this.unscheduleAllCallbacks();
+        this.animationMotion.stop();
         this.animationMotion.play("dead");
+        
         this._status = ENUM_PLAYER_STATUS.DEAD;
     }
+
 
     public onLeftSwipe(){
         if (this._status === ENUM_PLAYER_STATUS.JUMP || this._status === ENUM_PLAYER_STATUS.FALL) return;
@@ -101,7 +104,7 @@ export class PlayerControl extends Component {
         }
         this._position.add3f(-400, 0, 0)
         tween(this.node)
-        .to(0.67,{position: this._position},
+        .to(0.67,{position: this._position, },
             {
                 easing : k => this.jumpCurve.evaluate(k), 
                 onComplete: () => {
@@ -121,7 +124,7 @@ export class PlayerControl extends Component {
         this._status = ENUM_PLAYER_STATUS.FALL;
         GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.PLAYER_SLIP)
         tween(this.node)
-            .by(1.5, { position: v3(0, -150 * 7) }, {
+            .by(1.5, { position: v3(0, -150 * 5) }, {
                 easing: "cubicInOut", onComplete: () => {
                     this._status = ENUM_PLAYER_STATUS.CLIMB
                 }

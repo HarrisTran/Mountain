@@ -58,7 +58,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -495,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -93,7 +93,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 3
@@ -108,7 +108,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -23.397,
+      "y": -100.005,
       "z": 0
     },
     "_lrot": {
@@ -121,7 +121,7 @@
     "_lscale": {
       "__type__": "cc.Vec3",
       "x": 1,
-      "y": 1,
+      "y": 0,
       "z": 1
     },
     "_mobility": 0,
@@ -244,7 +244,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 66.162,
       "z": 0
     },
     "_lrot": {
@@ -290,7 +290,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_id": ""
   },
@@ -433,7 +433,7 @@
     "value": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 11,
+      "y": -16.858,
       "z": 0
     }
   },
@@ -477,7 +477,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 23
@@ -495,7 +495,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 3.482,
       "z": 0
     },
     "_lrot": {
@@ -508,7 +508,7 @@
     "_lscale": {
       "__type__": "cc.Vec3",
       "x": 1,
-      "y": 1,
+      "y": 0,
       "z": 1
     },
     "_mobility": 0,
@@ -636,6 +636,8 @@
       "__id__": 0
     },
     "fileId": "d35b23X8NOYJbJvq9ya4Xl",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {

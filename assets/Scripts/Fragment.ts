@@ -1,12 +1,11 @@
-import { _decorator, Collider2D, Component, Contact2DType, instantiate, IPhysics2DContact, Node, ParticleSystem, RigidBody2D, v2, Vec3 } from 'cc';
-import { ENUM_COLLIDER_TAG } from './Enum';
+import { _decorator, Collider2D, Component, Contact2DType, game, instantiate, IPhysics2DContact, Node, ParticleSystem, RigidBody2D, v2, Vec3 } from 'cc';
+import { ENUM_COLLIDER_TAG, ENUM_GAME_EVENT } from './Enum';
 import { GameManager } from './Manager/GameManager';
 import PoolManager from './Manager/PoolManager';
 import { delay, playParticleSystemRecursively } from './Utils';
 const { ccclass, property } = _decorator;
 
 export interface IFragment {
-    id: number ;
     line1: string[];
     line2: string[];
     line3: string[];
@@ -18,7 +17,6 @@ export class Fragment extends Component {
     @property(Node) ladder2 : Node = null;
     @property(Node) ladder3: Node = null;
 
-    id: number ;
     line1: string[];
     line2: string[];
     line3: string[];
@@ -51,11 +49,11 @@ export class Fragment extends Component {
 
     onBeginContact(self: Collider2D, other: Collider2D, contact: IPhysics2DContact){
         if(other.tag == ENUM_COLLIDER_TAG.PLAYER){
-            GameManager.instance.playerDataManager.currentFragmentIndex = this.id;
+            game.emit(ENUM_GAME_EVENT.NEW_FRAGMENT);
         }
     }
 
-    public async magicPocketEffect() {
+    public async magicPocketAffect() {
         let list1Pos : Vec3[] = [];
         let list1Node : Node[] = [];
         

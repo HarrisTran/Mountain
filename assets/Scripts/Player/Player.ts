@@ -11,6 +11,7 @@ import { BoosterBase } from "../Manager/PlayerDataManager";
 import { Node } from "cc";
 import { DestroyableNode } from "../Entity/DestroyableNode";
 import { delay } from "../Utils";
+import { Fragment } from "../Fragment";
 
 
 const { ccclass, property } = _decorator;
@@ -72,7 +73,7 @@ export class Player extends Component {
                 break;
             case ENUM_COLLIDER_TAG.B7:
                 other.node.getComponent(DestroyableNode).isDestroyable = true;
-                game.emit(ENUM_GAME_EVENT.MAGIC_POCKET_EFFECT);
+                GameManager.instance.findFragmentPlayerClimbing().getComponent(Fragment).magicPocketAffect();
                 data.addBooster(new MagicPocketBooster())
                 GameManager.instance.audioManager.playSfx(ENUM_ADUDIO_CLIP.ITEM_SWAP)
                 break;
