@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, game, Node, Prefab, UITransform, Vec3 } from 'cc';
+import { _decorator, Component, Enum, game, Node, Prefab, Vec3 } from 'cc';
 import { ENUM_ADUDIO_CLIP, ENUM_GAME_EVENT, MAIN_GAMESTATE } from '../Enum';
 import { Fragment, IFragment } from '../Fragment';
 import { delay } from '../Utils';
