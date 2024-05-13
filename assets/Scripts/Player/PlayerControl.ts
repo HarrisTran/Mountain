@@ -149,6 +149,7 @@ export class PlayerControl extends Component {
     }
 
     private onKeyDown(event: EventKeyboard): void {
+        if(this._status == ENUM_PLAYER_STATUS.IDLE) return;
         switch (event.keyCode) {
             case KeyCode.KEY_A:
                 this.onLeftSwipe()
